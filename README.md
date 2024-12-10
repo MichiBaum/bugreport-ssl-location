@@ -167,3 +167,6 @@ Me, myself and I do not think that it is a Bug BUT
 
 ## Additional resources
 **Probably** changed in https://github.com/spring-projects/spring-boot/issues/42835
+Opened Issue in Spring Cloud Gateway: https://github.com/spring-cloud/spring-cloud-gateway/issues/3631
+Opened Issue in Spring Boot: https://github.com/spring-projects/spring-boot/issues/43461
+Opened Issue in Microservice Repo: https://github.com/MichiBaum/Microservices/issues/92
