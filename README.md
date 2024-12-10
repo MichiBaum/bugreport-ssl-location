@@ -114,3 +114,56 @@ Process finished with exit code 1
 ```
 
 'Bug' is: **Caused by: java.io.FileNotFoundException: class path resource [D:/repositories/bugreport-ssl-location/keyStore.p12] cannot be opened because it does not exist**
+
+
+## Workaround
+
+If we change following in application.yml with updating to spring boot 3.4.0 it works
+
+From:
+```
+spring:
+  ssl:
+    bundle:
+      jks:
+        server:
+          keystore:
+            location: "D:/repositories/bugreport-ssl-location/keyStore.p12"
+```
+
+To:
+```
+spring:
+  ssl:
+    bundle:
+      jks:
+        server:
+          keystore:
+            location: "file:D:/repositories/bugreport-ssl-location/keyStore.p12"
+```
+
+Application starts normal:
+```
+ :: Spring Boot ::                (v3.4.0)
+
+2024-12-10T11:03:32.946+01:00  INFO 27448 --- [bugreport-ssl-location] [           main] c.m.b.BugreportSslLocationApplication    : Starting BugreportSslLocationApplication using Java 21.0.1 with PID 27448 (D:\repositories\bugreport-ssl-location\target\classes started by micha in D:\repositories\bugreport-ssl-location)
+2024-12-10T11:03:32.949+01:00  INFO 27448 --- [bugreport-ssl-location] [           main] c.m.b.BugreportSslLocationApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-12-10T11:03:33.774+01:00  INFO 27448 --- [bugreport-ssl-location] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 443 (https)
+2024-12-10T11:03:33.785+01:00  INFO 27448 --- [bugreport-ssl-location] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-10T11:03:33.786+01:00  INFO 27448 --- [bugreport-ssl-location] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-10T11:03:33.827+01:00  INFO 27448 --- [bugreport-ssl-location] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-10T11:03:33.827+01:00  INFO 27448 --- [bugreport-ssl-location] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 835 ms
+2024-12-10T11:03:34.247+01:00  INFO 27448 --- [bugreport-ssl-location] [           main] o.a.t.util.net.NioEndpoint.certificate   : Connector [https-jsse-nio-443], TLS virtual host [_default_], certificate type [UNDEFINED] configured from keystore [C:\Users\micha\.keystore] using alias [certificates] with trust store [null]
+2024-12-10T11:03:34.258+01:00  INFO 27448 --- [bugreport-ssl-location] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 443 (https) with context path '/'
+2024-12-10T11:03:34.263+01:00  INFO 27448 --- [bugreport-ssl-location] [           main] c.m.b.BugreportSslLocationApplication    : Started BugreportSslLocationApplication in 1.705 seconds (process running for 2.292)
+```
+
+## Conclusion
+
+Me, myself and I do not think that it is a Bug BUT
+
+- It is a breaking change from 3.3.6 -> 3.4.0
+- I do not find anything documented on how to set keystore location
+
+## Additional resources
+**Probably** changed in https://github.com/spring-projects/spring-boot/issues/42835
