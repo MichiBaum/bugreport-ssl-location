@@ -1,0 +1,21 @@
+server:
+  port: 443
+  ssl:
+    enabled: true
+    bundle: server
+  http2:
+    enabled: true
+
+spring:
+  application:
+    name: bugreport-ssl-location
+  ssl:
+    bundle:
+      jks:
+        server:
+          key:
+            alias: "certificates"
+          keystore:
+            location: "D:/repositories/bugreport-ssl-location/keyStore.p12"
+            password: "4af8iU1C0Vrtu3Zhh0sA"
+            type: "PKCS12"
